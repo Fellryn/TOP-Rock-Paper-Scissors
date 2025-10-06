@@ -29,6 +29,10 @@ button:active {
     background-color: rgb(59, 82, 146);
 }
 
+h2 {
+    display: inline;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -54,7 +58,17 @@ header {
 .right-player-image {
     width: 400px;
     height: 300px;
-    border: 1px black dashed;
+    border: 3px black dashed;
+}
+
+.winner {
+    border: greenyellow 3px solid;
+}
+
+.left-player-score,
+.right-player-score {
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
 .left-player-image img {
