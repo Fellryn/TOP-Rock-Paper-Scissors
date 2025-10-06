@@ -7,7 +7,7 @@ let roundCount = 0;
 document.addEventListener('DOMContentLoaded', () => {
     const leftPlayerImage = document.querySelector(".left-player-image");
     const rightPlayerImage = document.querySelector(".right-player-image");
-    
+
     leftPlayerImage.innerHTML = "";
     rightPlayerImage.innerHTML = "";
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function playRound() {
     roundCount++;
-    
+
     const lPlayerImage = document.querySelector(".left-player-image");
     const rPlayerImage = document.querySelector(".right-player-image");
 
@@ -57,18 +57,18 @@ function playRound() {
     switch (result) {
         case 0:
             break;
-        case 1: 
+        case 1:
             leftPlayerScore++;
             lPlayerImage.classList.add("winner");
             break;
-        case 2: 
+        case 2:
             rightPlayerScore++;
             rPlayerImage.classList.add("winner");
             break;
     }
 
     updateScores();
-    updateRoundCounter();
+    updateRoundCounter(result);
 }
 
 function getComputerChoice() {
@@ -112,7 +112,20 @@ function updateScores() {
     rightPlayerScoreText.textContent = rightPlayerScore;
 }
 
-function updateRoundCounter() {
+function updateRoundCounter(result) {
     const roundCounter = document.getElementById("roundCounter");
-    roundCounter.textContent = roundCount;
+    roundCounter.textContent = "Rounds: " + roundCount;
+
+    const resultText = document.getElementById("resultText");
+    switch (result) {
+        case 0:
+            resultText.textContent = "Tie!";
+            break;
+        case 1:
+            resultText.textContent = "Left player wins!";
+            break;
+        case 2:
+            resultText.textContent = "Right player wins!";
+            break;
+    }
 }
