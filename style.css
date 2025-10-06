@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: Roboto, Arial, Helvetica, sans-serif
+}
+
 body {
-    background-color: black;
+    background-color: rgb(206, 217, 250);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+header {
+    background-color: rgb(82, 80, 189);
+    padding: 0px 16px;
+    border-radius: 10px;
+    color: white;
 }
