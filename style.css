@@ -65,6 +65,10 @@ header {
     border: greenyellow 3px solid;
 }
 
+.loser {
+    border: red 3px solid;
+}
+
 .left-player-score,
 .right-player-score {
     margin-left: 80px;

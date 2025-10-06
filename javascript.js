@@ -52,6 +52,8 @@ function playRound() {
 
     lPlayerImage.classList.remove("winner");
     rPlayerImage.classList.remove("winner");
+    lPlayerImage.classList.remove("loser");
+    rPlayerImage.classList.remove("loser");
 
     let result = resolveWinner(leftPlayerChoice, rightPlayerChoice);
     switch (result) {
@@ -60,10 +62,12 @@ function playRound() {
         case 1:
             leftPlayerScore++;
             lPlayerImage.classList.add("winner");
+            rPlayerImage.classList.add("loser");
             break;
         case 2:
             rightPlayerScore++;
             rPlayerImage.classList.add("winner");
+            lPlayerImage.classList.add("loser");
             break;
     }
 
