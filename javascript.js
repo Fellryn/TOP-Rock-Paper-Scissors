@@ -3,8 +3,36 @@ let rightPlayerChoice = "";
 let leftPlayerScore = 0;
 let rightPlayerScore = 0;
 let roundCount = 0;
+const ROUNDS_TO_PLAY = 5;
+gameOver = false;
 
 document.addEventListener('DOMContentLoaded', () => {
+
+
+    const btnRock = document.getElementById("btnRock");
+    const btnPaper = document.getElementById("btnPaper");
+    const btnScissors = document.getElementById("btnScissors");
+
+    btnRock.addEventListener('click', () => {
+        leftPlayerChoice = "rock";
+        playRound();
+    });
+
+    btnPaper.addEventListener('click', () => {
+        leftPlayerChoice = "paper";
+        playRound();
+    });
+
+    btnScissors.addEventListener('click', () => {
+        leftPlayerChoice = "scissors";
+        playRound();
+    });
+});
+
+
+function playRound() {
+    if (gameOver) return;
+
     const leftPlayerImage = document.querySelector(".left-player-image");
     const rightPlayerImage = document.querySelector(".right-player-image");
 
@@ -16,32 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     leftPlayerScoreText.textContent = leftPlayerScore;
     rightPlayerScoreText.textContent = rightPlayerScore;
+    
+    setImage(leftPlayerImage, leftPlayerChoice);
 
-    const btnRock = document.getElementById("btnRock");
-    const btnPaper = document.getElementById("btnPaper");
-    const btnScissors = document.getElementById("btnScissors");
-
-    btnRock.addEventListener('click', () => {
-        leftPlayerChoice = "rock";
-        setImage(leftPlayerImage, leftPlayerChoice);
-        playRound();
-    });
-
-    btnPaper.addEventListener('click', () => {
-        leftPlayerChoice = "paper";
-        setImage(leftPlayerImage, leftPlayerChoice);
-        playRound();
-    });
-
-    btnScissors.addEventListener('click', () => {
-        leftPlayerChoice = "scissors";
-        setImage(leftPlayerImage, leftPlayerChoice);
-        playRound();
-    });
-});
-
-
-function playRound() {
     roundCount++;
 
     const lPlayerImage = document.querySelector(".left-player-image");
@@ -118,7 +123,7 @@ function updateScores() {
 
 function updateRoundCounter(result) {
     const roundCounter = document.getElementById("roundCounter");
-    roundCounter.textContent = "Rounds: " + roundCount;
+    roundCounter.textContent = "Round: " + roundCount;
 
     const resultText = document.getElementById("resultText");
     switch (result) {
@@ -131,5 +136,53 @@ function updateRoundCounter(result) {
         case 2:
             resultText.textContent = "Right player wins!";
             break;
+        case 3:
+            resultText.textContent = "Throw a hand by clicking below!"
+            break;
     }
+
+    if (roundCount >= ROUNDS_TO_PLAY) {
+        gameOver = true;
+        decideWinner();
+    };
+}
+
+function decideWinner() {
+    let winner = "";
+    if (leftPlayerScore > rightPlayerScore) {
+        winner = "Left player";
+    } else if (rightPlayerScore > leftPlayerScore) {
+        winner = "Right player";
+    } else {
+        winner = "Tie";
+    }
+
+    const winDialog = document.createElement("div");
+    winDialog.classList.add("overlay");
+    winDialog.textContent = winner === "Tie" ? "The game is a tie!" : `${winner} wins the game!`;
+
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Restart";
+    restartButton.style.display = "block";
+    restartButton.style.margin = "0 auto";
+    restartButton.addEventListener("click", () => {
+        winDialog.remove();
+        rightPlayerScore = 0;
+        leftPlayerScore = 0;
+        roundCount = 0;
+        updateScores();
+        updateRoundCounter(3);
+        gameOver = false;
+        const leftPlayerImage = document.querySelector(".left-player-image");
+        const rightPlayerImage = document.querySelector(".right-player-image");
+        leftPlayerImage.innerHTML = "";
+        rightPlayerImage.innerHTML = "";
+        leftPlayerImage.classList.remove("winner");
+        leftPlayerImage.classList.remove("loser");
+        rightPlayerImage.classList.remove("winner");
+        rightPlayerImage.classList.remove("loser");
+    });
+
+    winDialog.appendChild(restartButton);
+    document.body.appendChild(winDialog);
 }
